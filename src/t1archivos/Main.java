@@ -8,10 +8,10 @@ package t1archivos;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- *
- * @author LENOVO-PC
- */
+
+/**================Nota=============================
+ * 
+ * El archivo tiene que estar en la ubicacion dentro de la caret del proyecto**/
 public class Main {
 
     
@@ -20,6 +20,7 @@ public class Main {
         Archivo arch = new Archivo();
         arch.leerArchivo();
         listado = arch.listaF;
+        
         boolean salir = true;
         while (salir) {            
             System.out.println("+=====================+");
