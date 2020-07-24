@@ -41,7 +41,6 @@ public class Main {
                     da.setRed1(sc.nextLine());
                     System.out.println("Escribe tu Red Social 2: ");
                     da.setRed2(sc.nextLine());
-                    
                     listado.add(da);
                     arch.crearArchivo(listado);
                     System.out.println("listo");

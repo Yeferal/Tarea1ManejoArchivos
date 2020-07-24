@@ -17,95 +17,29 @@ import java.util.logging.Logger;
 
 public class Archivo {
     
-    String ruta = "Da";
+    String ruta = "Datos";
     ArrayList<Dato> listaF = new ArrayList<>();
-    
-//    public void crearArchivo(ArrayList<Dato> lista){
-//       // Scanner sc = new Scanner(System.in);                                                                      
-//        FileOutputStream fos = null;
-//        DataOutputStream salida = null;
-//        int n;
-//
-//        try {
-//            fos = new FileOutputStream(ruta);
-//            salida = new DataOutputStream(fos);
-//            
-//            for (int i = 0; i <lista.size() ; i++) {
-//                Dato d = lista.get(i);
-//                salida.writeChars(d.nombre+"|"+d.numero+"|"+d.red1+"|"+d.red2+"\n");
-//            }
-//
-//        } catch (FileNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        } finally {
-//            try {
-//                if (fos != null) {
-//                    fos.close();
-//                }
-//                if (salida != null) {
-//                    salida.close();
-//                }
-//            } catch (IOException e) {
-//                System.out.println(e.getMessage());                                                               
-//            }
-//        }
-//    }
-//    
-//    public void leerArchivo(){
-//        FileInputStream fis = null;
-//        DataInputStream entrada = null;
-//        String n = null;
-//        listaF.clear();
-//        try {
-//            
-//            fis = new FileInputStream(ruta);
-//            entrada = new DataInputStream(fis);
-//            String linea;
-//        while((linea=entrada.readLine())!=null){
-//            String l = linea;
-//            String t [] = l.split("\\|");
-//            Dato d = new Dato(t[0], t[1], t[2], t[3]);
-//            listaF.add(d);
-//        }
-//        } catch (FileNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        } catch (EOFException e) {
-//            System.out.println("Fin de fichero");
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        } finally {
-//            try {
-//                if (fis != null) {
-//                    fis.close();
-//                }
-//                if (entrada != null) {
-//                    entrada.close();
-//                }
-//            } catch (IOException e) {
-//                System.out.println(e.getMessage());                                                               
-//            }
-//        }
-//        
-//    }
     
     
     public void crearArchivo(ArrayList<Dato> lista){
         File file = new File(ruta);
-        
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream);
-            String texto = "";
-            for (int i = 0; i < lista.size(); i++) {
-                texto += lista.get(i).nombre+"|"+lista.get(i).numero+"|"+lista.get(i).red1+"|"+lista.get(i).getRed2()+" \n";
+        if(!validarNombre(lista.get(lista.size()-1).nombre)){
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream);
+                String texto = "";
+                for (int i = 0; i < lista.size(); i++) {
+                    texto += lista.get(i).nombre+"|"+lista.get(i).numero+"|"+lista.get(i).red1+"|"+lista.get(i).getRed2()+" \n";
+                }
+                outputStream.writeObject(texto);
+                outputStream.close();
+            }catch(IOException e){
+                e.printStackTrace();
             }
-            outputStream.writeObject(texto);
-            outputStream.close();
-        }catch(IOException e){
-            e.printStackTrace();
+        }else{
+            System.out.println("Ya existe un Usuario con ese nombre");
         }
+            
     }
     
     public void leerArchivo() throws ClassNotFoundException{
@@ -141,7 +75,16 @@ public class Archivo {
         
     }
     
-    
+    public boolean validarNombre(String nombre){
+        boolean existe = false;
+        for (int i = 0; i < listaF.size()-1; i++) {
+            if (listaF.get(i).getNombre().equals(nombre)) {
+                return true;
+            }
+        }
+        
+        return existe;
+    }
     
     
     public void mostrarRegistros(){
